@@ -7,20 +7,6 @@ import boto3
 import os 
 
 
-# Overall process 
-# Step 1: Create an Array containg the last 90days dates.
-# Step 2: Create an Array containing the clients. 
-# Step 3: Create a For Loop to run through the clients array
-#       Step 3.5: Create a For Loop to run through the dates array
-#        Step 3.7 ForEach Client run through Date Array
-#                 In Date Array send download this export file for tis.   
-# Step 2: Connect to RB  
-# Step 2: Create a for loop for to loop through the array. 
-#          ForEach Date send this export to S3.  
-# Connect to Reviewbox 
-   # Change the Buybox Export with  the array, create a for loop to run through the array. 
-# For each 
-
 # Parts 
 
 ##Arrays
@@ -35,10 +21,10 @@ EndDate = '1625097600'
 
 #Step 1 Request Report
 
-# data = {'type':'BuyboxExport', 'name': 'Bruder_BuyboxExport','bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}
-# headers = {'Authorization': 'a66d68cd8fef49689186856013ebefdf'}
-# url = 'https://rest.getreviewbox.com/report'
-# response = requests.post(url=url,data=data, headers=headers)
+data = {'type':'BuyboxExport', 'name': 'Bruder_BuyboxExport','bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}
+headers = {'Authorization': 'a66d68cd8fef49689186856013ebefdf'}
+url = 'https://rest.getreviewbox.com/report'
+response = requests.post(url=url,data=data, headers=headers)
 
 
 # with open(response.json()):
