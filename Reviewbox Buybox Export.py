@@ -5,7 +5,7 @@ import urllib3
 import logging 
 import boto3
 import os 
-
+from itertools import islice
 
 # Parts 
 
@@ -74,9 +74,10 @@ for reports in reportArray:
               headers = {'Authorization': autho}
               url = 'https://rest.getreviewbox.com/report'
               response = requests.post(url=url,data=data, headers=headers)
-              dataReports = response.json.loads()
+              dataReports = response.json()
               print(dataReports)
-
+            # Spit JSON dict into job: jobid
+            
 
 
 # #Step 2 Get the Reports
