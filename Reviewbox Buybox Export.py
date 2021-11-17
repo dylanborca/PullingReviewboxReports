@@ -22,10 +22,10 @@ EndDate = '1625097600'
 
 #Step 1 Request Report
 
-data = {'type':'BuyboxExport', 'name': 'Bruder_BuyboxExport','bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}
-headers = {'Authorization': 'a66d68cd8fef49689186856013ebefdf'}
-url = 'https://rest.getreviewbox.com/report'
-response = requests.post(url=url,data=data, headers=headers)
+# data = {'type':'BuyboxExport', 'name': 'Bruder_BuyboxExport','bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}
+# headers = {'Authorization': 'a66d68cd8fef49689186856013ebefdf'}
+# url = 'https://rest.getreviewbox.com/report'
+# response = requests.post(url=url,data=data, headers=headers)
 
 
 # with open(response.json()):
@@ -67,28 +67,37 @@ response = requests.post(url=url,data=data, headers=headers)
 
 reportArray=['BulkReviewsExport', 'BulkQuestionsExport','BuyboxExport', 'SellerPricesExport','CopyboxContentExport', 'SearchRankExport']
 
-for reports in reportArray:
-       for autho in neatoDict.values():
-          for clients in neatoDict:
+for reports in reportArray: #Run Through the Reports Array
+       for autho in neatoDict.values(): # Run through the Dictionary and pull the API Keys
+          for clients in neatoDict: #Pull the Client's Name
               data = {'type':reports, 'name': str.capitalize(clients)+'_'+reports,'bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}       
               headers = {'Authorization': autho}
               url = 'https://rest.getreviewbox.com/report'
               response = requests.post(url=url,data=data, headers=headers)
               dataReports = response.json()
-              print(dataReports)
+              for jobid in dataReports.values():
+                 url = 'https://rest.getreviewbox.com/job'
+                 headers = {'Authorization':autho}
+                 params= {'job':jobid}
+                 response = requests.get(url, params=params, headers=headers)
+                 Exports=(response.json()) # Get JSON data for the submitted
+                 for exportsdata in  Exports.items(): 
+                    print(exportsdata)
+            #   print(dataReports)
             # Spit JSON dict into job: jobid
-            
+
 
 
 # #Step 2 Get the Reports
-# for autho in clientDictionary2.values():
-#        for status, jobid in dataReports.items():
+
+# for autho in neatoDict.values():
+#        for jobid in dataReports.values():
 #           print(jobid)
 #           url = 'https://rest.getreviewbox.com/job'
 #           headers = {'Authorization':autho}
 #           params= {'job':jobid}
 #           response = requests.get(url, params=params, headers=headers)
-#          #  print(jobid, response.url)
+#           print(response.json())
 
 
 ## BuyBoxData
