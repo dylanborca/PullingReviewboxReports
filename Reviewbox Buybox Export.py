@@ -22,6 +22,83 @@ EndDate = '1625097600'
 
 #Step 1 Request Report
 
+
+# ### Step 1: Iterate through the Dates ~ For Each Date in the dateRange Array do reques
+# #  Step 1.5 Iterate through the ClientDictionary ~ For each client request the report 
+# # For each client get  
+
+reportArray=['BulkReviewsExport', 'BulkQuestionsExport','BuyboxExport', 'SellerPricesExport','CopyboxContentExport', 'SearchRankExport']
+
+for reports in reportArray: #Run Through the Reports Array
+   data = {'type':reports, 'name': 'Neato'+'_'+reports,'bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}       
+   headers = {'Authorization':'a93d3e91bf32488e9323bf6479ec45f5' }
+   url = 'https://rest.getreviewbox.com/report'
+   response = requests.post(url=url,data=data, headers=headers)
+   dataReports = response.json()
+   for jobid in dataReports.values():
+    url = 'https://rest.getreviewbox.com/job'
+    headers = {'Authorization':'a93d3e91bf32488e9323bf6479ec45f5'}
+    params= {'job':jobid}
+    response = requests.get(url, params=params, headers=headers)
+   Exports=(response.json()) # Get JSON data for the submitted
+   for exportsdata in  Exports.items(): 
+                    print(exportsdata)
+   
+
+## BuyBoxData
+
+# Total 
+
+# for reports in reportArray: #Run Through the Reports Array
+#        for autho in neatoDict.values(): # Run through the Dictionary and pull the API Keys
+#           for clients in neatoDict: #Pull the Client's Name
+#               data = {'type':reports, 'name': str.capitalize(clients)+'_'+reports,'bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}       
+#               headers = {'Authorization': autho}
+#               url = 'https://rest.getreviewbox.com/report'
+#               response = requests.post(url=url,data=data, headers=headers)
+#               dataReports = response.json()
+#               for jobid in dataReports.values():
+#                  url = 'https://rest.getreviewbox.com/job'
+#                  headers = {'Authorization':autho}
+#                  params= {'job':jobid}
+#                  response = requests.get(url, params=params, headers=headers)
+#                  Exports=(response.json()) # Get JSON data for the submitted
+#                  for exportsdata in  Exports.items(): 
+#                     print(exportsdata)
+
+## Step 1: Reuest Report
+
+# for dates in dateRange:
+#    for reports in clientDictionary.values():
+#       data = {'type':'BuyboxExport', 'name': client +'_'+'_BuyboxExport','bucket':'orcacarbondata','start_ts':dates, 'end_ts':dates}
+#       headers = {'Authorization': reports}
+#       url = 'https://rest.getreviewbox.com/report'
+#       response = requests.post(url=url,data=data, headers=headers)
+#       print(dates,reports, response.json())
+
+# clientAPIs = clientDictionary.items
+
+# for item in clientAPIs:
+#    print(item)
+   
+# for dates in dateRange:
+
+#Step 2
+# url = 'https://rest.getreviewbox.com/job'
+# headers = {'Authorization': 'dd2b9f2653eb4385914887fd489012e2'}
+# params= {'job': '9252a8b1-05b8-415f-a345-aab964c930be'}
+# response = requests.get(url, params=data, headers=headers)
+# print(response)
+# url= 'https://rest.getreviewbox.com/'
+# apiKey ='dd2b9f2653eb4385914887fd489012e2'
+
+#Step 3: Download the file 
+#response= request.get("",headers=headers)
+# with urllib3.request.urlopen("")
+# data = json.load(url.read().decode())
+
+#Parts 
+
 # data = {'type':'BuyboxExport', 'name': 'Bruder_BuyboxExport','bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}
 # headers = {'Authorization': 'a66d68cd8fef49689186856013ebefdf'}
 # url = 'https://rest.getreviewbox.com/report'
@@ -60,36 +137,6 @@ EndDate = '1625097600'
 # # print(response.json())
 
 # ## Logic 
-
-# ### Step 1: Iterate through the Dates ~ For Each Date in the dateRange Array do reques
-# #  Step 1.5 te through the ClientDictionary ~ For each client request the report 
-# # For each client get  
-
-reportArray=['BulkReviewsExport', 'BulkQuestionsExport','BuyboxExport', 'SellerPricesExport','CopyboxContentExport', 'SearchRankExport']
-
-for reports in reportArray: #Run Through the Reports Array
-       for autho in neatoDict.values(): # Run through the Dictionary and pull the API Keys
-          for clients in neatoDict: #Pull the Client's Name
-              data = {'type':reports, 'name': str.capitalize(clients)+'_'+reports,'bucket':'orcacarbondata','start_ts':StartDate, 'end_ts':EndDate}       
-              headers = {'Authorization': autho}
-              url = 'https://rest.getreviewbox.com/report'
-              response = requests.post(url=url,data=data, headers=headers)
-              dataReports = response.json()
-              for jobid in dataReports.values():
-                 url = 'https://rest.getreviewbox.com/job'
-                 headers = {'Authorization':autho}
-                 params= {'job':jobid}
-                 response = requests.get(url, params=params, headers=headers)
-                 Exports=(response.json()) # Get JSON data for the submitted
-                 for exportsdata in  Exports.items(): 
-                    print(exportsdata)
-            #   print(dataReports)
-            # Spit JSON dict into job: jobid
-
-
-
-# #Step 2 Get the Reports
-
 # for autho in neatoDict.values():
 #        for jobid in dataReports.values():
 #           print(jobid)
@@ -98,38 +145,3 @@ for reports in reportArray: #Run Through the Reports Array
 #           params= {'job':jobid}
 #           response = requests.get(url, params=params, headers=headers)
 #           print(response.json())
-
-
-## BuyBoxData
-
-## Step 1: Reuest Report
-
-# for dates in dateRange:
-#    for reports in clientDictionary.values():
-#       data = {'type':'BuyboxExport', 'name': client +'_'+'_BuyboxExport','bucket':'orcacarbondata','start_ts':dates, 'end_ts':dates}
-#       headers = {'Authorization': reports}
-#       url = 'https://rest.getreviewbox.com/report'
-#       response = requests.post(url=url,data=data, headers=headers)
-#       print(dates,reports, response.json())
-
-# clientAPIs = clientDictionary.items
-
-# for item in clientAPIs:
-#    print(item)
-   
-# for dates in dateRange:
-
-#Step 2
-# url = 'https://rest.getreviewbox.com/job'
-# headers = {'Authorization': 'dd2b9f2653eb4385914887fd489012e2'}
-# params= {'job': '9252a8b1-05b8-415f-a345-aab964c930be'}
-# response = requests.get(url, params=data, headers=headers)
-# print(response)
-# url= 'https://rest.getreviewbox.com/'
-# apiKey ='dd2b9f2653eb4385914887fd489012e2'
-
-#Step 3: Download the file 
-#response= request.get("",headers=headers)
-# with urllib3.request.urlopen("")
-# data = json.load(url.read().decode())
-
